@@ -19,7 +19,8 @@ header {
     padding: 20px;
     display: flex;
     align-items: center;
-    font-size: 30px;
+    font-size: 36px;
+    font-weight: 700;
 }
 
 header > img {
@@ -64,6 +65,74 @@ header > img:hover {
 .sidebar > button:hover {
     background-color: var(--goldenrodColor);
     font-weight: 600;
+    cursor: pointer;
+}
+
+/* add project modal */
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: 200ms ease-in-out;
+    border: 1px solid black;
+    border-radius: 12px;
+    z-index: 10;
+    background-color: white;
+    width: 500px;
+    max-width: 70%;
+}
+
+.modal.active {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.modal-header {
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid gainsboro;
+}
+
+.modal-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.close-button {
+   font-size: 20px;
+   font-weight: bold;
+   cursor: pointer;
+   border: none;
+   outline: none;
+   background: none;
+}
+
+.close-button::before {
+    content: '\2715';
+}
+
+.modal-body {
+    padding: 10px 15px;
+}
+
+/* overlay */
+#overlay {
+    position: fixed;
+    opacity: 0;
+    transition: 200ms ease-in-out;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+}
+
+#overlay.active {
+    opacity: 1;
+    pointer-events: all;
 }
 
 /* icons */
