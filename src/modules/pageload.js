@@ -92,7 +92,8 @@ const pageLoad = () => {
     addProjectModalHeader.appendChild(addProjectModalClose);
     const addProjectModalBody = document.createElement('div');
     addProjectModalBody.classList.add('modal-body');
-    addProjectModalBody.textContent = 'asdasd'
+    //addProjectModalBody.textContent = 'asdasd'
+    
 
 
     addProjectModal.appendChild(addProjectModalBody);
@@ -142,6 +143,18 @@ const pageLoad = () => {
     content.classList.add('content');
     document.body.appendChild(content);
 
+    const addTaskButtonContainer = document.createElement('div');
+    addTaskButtonContainer.classList.add('add-task-container');
+    const addTaskButton = document.createElement('button');
+    //addTaskButton.classList.add('add-task');
+    addTaskButton.textContent = '+ Add Task';
+    
+
+    addTaskButtonContainer.appendChild(addTaskButton);
+    content.appendChild(addTaskButtonContainer);
+
+
+    //footer
     const footer = document.createElement('footer');
     const footerAuthor = document.createElement('div');
     footerAuthor.textContent = 'Placeholder footer';

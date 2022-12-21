@@ -1,5 +1,6 @@
 :root {
     --goldenrodColor: #DAA520;
+    --goldenYellow: #FCE205;
 }
 
 body {
@@ -36,7 +37,7 @@ header > img:hover {
 .sidebar {
     grid-row: 2 / 3;
     grid-column: 1 / 2;
-    background-color: #FCE205;
+    background-color: var(--goldenYellow);
     display: flex;
     flex-direction: column;
     padding: 15px 12px 15px 12px;
@@ -126,7 +127,7 @@ header > img:hover {
     bottom: 0;
     right: 0;
     left: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+    /*background-color: rgba(0, 0, 0, 0.5);*/
     pointer-events: none;
 }
 
@@ -150,6 +151,26 @@ header > img:hover {
 .content {
     grid-row: 2 / 3;
     grid-column: 2 / 3;
+}
+
+.add-task-container {
+    padding: 10px;
+    border-bottom: 1px solid var(--goldenrodColor);
+}
+
+.add-task-container > button {
+    border: 2px solid var(--goldenYellow);
+    background-color: transparent;
+    border-radius: 12px;
+    width: 150px;
+    height: 40px;
+    margin-left: 100px;
+    font-size: 20px;
+}
+
+.add-task-container > button:hover {
+    cursor: pointer;
+    background-color: var(--goldenYellow);
 }
 
 footer {
