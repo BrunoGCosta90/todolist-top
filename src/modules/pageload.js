@@ -88,20 +88,18 @@ const pageLoad = () => {
     addProjectModalHeader.appendChild(addProjectModalTitle);
     const addProjectModalClose = document.createElement('button');
     addProjectModalClose.classList.add('close-button');
-    addProjectModalClose.id = 'modal-close';
+    addProjectModalClose.id = 'project-modal-close';
     addProjectModalHeader.appendChild(addProjectModalClose);
     const addProjectModalBody = document.createElement('div');
     addProjectModalBody.classList.add('modal-body');
-    //addProjectModalBody.textContent = 'asdasd'
+    addProjectModal.appendChild(addProjectModalBody);
     
 
-
-    addProjectModal.appendChild(addProjectModalBody);
     document.body.appendChild(addProjectModal);
 
     //make button for opening/closing the modal for adding project
     const openModalButton = document.getElementById('addProjectModalOpen');
-    const closeModalButton = document.getElementById('modal-close');
+    const closeModalButton = document.getElementById('project-modal-close');
     const overlay = document.createElement('div');
     overlay.id = 'overlay';
     document.body.appendChild(overlay);
@@ -146,12 +144,51 @@ const pageLoad = () => {
     const addTaskButtonContainer = document.createElement('div');
     addTaskButtonContainer.classList.add('add-task-container');
     const addTaskButton = document.createElement('button');
+    addTaskButton.id = 'addTaskModalOpen';
     //addTaskButton.classList.add('add-task');
     addTaskButton.textContent = '+ Add Task';
     
 
     addTaskButtonContainer.appendChild(addTaskButton);
     content.appendChild(addTaskButtonContainer);
+
+    //modal for adding tasks
+    const addTaskModal = document.createElement('div');
+    addTaskModal.classList.add('modal');
+    addTaskModal.id = 'modal-task';
+    const addTaskModalHeader = document.createElement('div');
+    addTaskModalHeader.classList.add('modal-header');
+    addTaskModal.appendChild(addTaskModalHeader);
+    const addTaskModalTitle = document.createElement('div');
+    addTaskModalTitle.classList.add('modal-title');
+    addTaskModalTitle.textContent = 'New Task';
+    addTaskModalHeader.appendChild(addTaskModalTitle);
+    const addTaskModalClose = document.createElement('button');
+    addTaskModalClose.classList.add('close-button');
+    addTaskModalClose.id = 'task-modal-close';
+    addTaskModalHeader.appendChild(addTaskModalClose);
+    const addTaskModalBody = document.createElement('div');
+    addTaskModalBody.classList.add('modal-body');
+    //addProjectModalBody.textContent = 'asdasd'
+
+    addTaskModal.appendChild(addTaskModalBody);
+    document.body.appendChild(addTaskModal);
+
+    //make button for opening/closing the modal for adding tasks
+    const openTaskModalButton = document.getElementById('addTaskModalOpen');
+    const closeTaskModalButton = document.getElementById('task-modal-close');
+    
+
+    openTaskModalButton.addEventListener('click', () => {
+        const modal = document.getElementById('modal-task');
+        openModal(modal);
+    })
+
+
+    closeTaskModalButton.addEventListener('click', () => {
+        const modal = document.getElementById('modal-task');
+        closeModal(modal);
+    })
 
 
     //footer
