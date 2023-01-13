@@ -169,8 +169,60 @@ const pageLoad = () => {
     addTaskModalHeader.appendChild(addTaskModalClose);
     const addTaskModalBody = document.createElement('div');
     addTaskModalBody.classList.add('modal-body');
-    //addProjectModalBody.textContent = 'asdasd'
+    const taskForm = document.createElement('form');
+    const taskTittle = document.createElement('input');
+    taskTittle.id = 'task-title';
+    taskTittle.name = 'task-title';
+    taskTittle.type = 'text';
+    taskTittle.placeholder = 'Task title';
+    taskForm.appendChild(taskTittle);
+    const taskDescription = document.createElement('textarea');
+    taskDescription.id = 'task-description';
+    taskDescription.name = 'task-desciption';
+    taskDescription.placeholder = 'Task description';
+    taskForm.appendChild(taskDescription);
+    const priorityContainer = document.createElement('div');
+    priorityContainer.id = 'priority-container';
+    const lowPrioInput = document.createElement('input');
+    lowPrioInput.type = 'radio';
+    lowPrioInput.name = 'priority';
+    lowPrioInput.id = 'low';
+    lowPrioInput.value = 'low';
+    const lowPrioLabel = document.createElement('label');
+    lowPrioLabel.setAttribute('for', 'low');
+    lowPrioLabel.textContent = 'Low';
+    priorityContainer.appendChild(lowPrioInput);
+    priorityContainer.appendChild(lowPrioLabel);
 
+    const mediumPrioInput = document.createElement('input');
+    mediumPrioInput.type = 'radio';
+    mediumPrioInput.name = 'priority';
+    mediumPrioInput.id = 'medium';
+    mediumPrioInput.value = 'medium';
+    const mediumPrioLabel = document.createElement('label');
+    mediumPrioLabel.setAttribute('for', 'medium');
+    mediumPrioLabel.textContent = 'Medium';
+    priorityContainer.appendChild(mediumPrioInput);
+    priorityContainer.appendChild(mediumPrioLabel);
+    taskForm.appendChild(priorityContainer);
+    //addProjectModalBody.textContent = 'asdasd'
+    addTaskModalBody.appendChild(taskForm);
+    addTaskModal.appendChild(addTaskModalBody);
+    document.body.appendChild(addTaskModal);
+
+    const highPrioInput = document.createElement('input');
+    highPrioInput.type = 'radio';
+    highPrioInput.name = 'priority';
+    highPrioInput.id = 'high';
+    highPrioInput.value = 'high';
+    const highPrioLabel = document.createElement('label');
+    highPrioLabel.setAttribute('for', 'high');
+    highPrioLabel.textContent = 'High';
+    priorityContainer.appendChild(highPrioInput);
+    priorityContainer.appendChild(highPrioLabel);
+    taskForm.appendChild(priorityContainer);
+    //addProjectModalBody.textContent = 'asdasd'
+    addTaskModalBody.appendChild(taskForm);
     addTaskModal.appendChild(addTaskModalBody);
     document.body.appendChild(addTaskModal);
 
