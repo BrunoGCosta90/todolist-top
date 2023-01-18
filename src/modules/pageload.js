@@ -2,11 +2,12 @@ import MenuIcon from '../icons/menu.svg';
 import InboxIcon from '../icons/inbox.svg';
 import TodayIcon from '../icons/calendar-today.svg';
 import UpcomingIcon from '../icons/calendar-month.svg';
-import { addProject } from './functions.js';
+import { addProject } from './projectManagement.js';
 import { times } from 'lodash';
+import { getDate } from './getCurrentDate.js';
 
 const pageLoad = () => {
-
+    let currentDate;
     //title
     //document.title = "ToDo";
 
@@ -50,7 +51,7 @@ const pageLoad = () => {
     todayButtonIcon.src = TodayIcon;
     todayButtonIcon.classList.add('icon');
     const todayText = document.createElement('div');
-    todayText.textContent = 'Today'
+    todayText.textContent = 'Today';
     todayButton.appendChild(todayButtonIcon);
     todayButton.appendChild(todayText);
     sidebar.appendChild(todayButton);
@@ -143,46 +144,63 @@ const pageLoad = () => {
 
     const addTaskButtonContainer = document.createElement('div');
     addTaskButtonContainer.classList.add('add-task-container');
-    const addTaskButton = document.createElement('button');
-    addTaskButton.id = 'addTaskModalOpen';
+    const addTaskModalButton = document.createElement('button');
+    addTaskModalButton.id = 'addTaskModalOpen';
     //addTaskButton.classList.add('add-task');
-    addTaskButton.textContent = '+ Add Task';
+    addTaskModalButton.textContent = '+ Add Task';
     
 
-    addTaskButtonContainer.appendChild(addTaskButton);
+    addTaskButtonContainer.appendChild(addTaskModalButton);
     content.appendChild(addTaskButtonContainer);
 
     //modal for adding tasks
     const addTaskModal = document.createElement('div');
     addTaskModal.classList.add('modal');
     addTaskModal.id = 'modal-task';
+
     const addTaskModalHeader = document.createElement('div');
     addTaskModalHeader.classList.add('modal-header');
     addTaskModal.appendChild(addTaskModalHeader);
+
     const addTaskModalTitle = document.createElement('div');
     addTaskModalTitle.classList.add('modal-title');
     addTaskModalTitle.textContent = 'New Task';
     addTaskModalHeader.appendChild(addTaskModalTitle);
+
     const addTaskModalClose = document.createElement('button');
     addTaskModalClose.classList.add('close-button');
     addTaskModalClose.id = 'task-modal-close';
     addTaskModalHeader.appendChild(addTaskModalClose);
+
     const addTaskModalBody = document.createElement('div');
     addTaskModalBody.classList.add('modal-body');
+    addTaskModalBody.id = 'add-task-modal-body';
+
     const taskForm = document.createElement('form');
+    taskForm.method = 'post';
+    taskForm.id = 'add-task-form';
+
     const taskTittle = document.createElement('input');
     taskTittle.id = 'task-title';
     taskTittle.name = 'task-title';
     taskTittle.type = 'text';
     taskTittle.placeholder = 'Task title';
     taskForm.appendChild(taskTittle);
+
     const taskDescription = document.createElement('textarea');
     taskDescription.id = 'task-description';
     taskDescription.name = 'task-desciption';
     taskDescription.placeholder = 'Task description';
     taskForm.appendChild(taskDescription);
+
     const priorityContainer = document.createElement('div');
     priorityContainer.id = 'priority-container';
+
+    const priorityLabel = document.createElement('label');
+    priorityLabel.id = 'priority-label';
+    priorityLabel.textContent = 'Priority';
+    priorityContainer.appendChild(priorityLabel)
+
     const lowPrioInput = document.createElement('input');
     lowPrioInput.type = 'radio';
     lowPrioInput.name = 'priority';
@@ -226,6 +244,26 @@ const pageLoad = () => {
     addTaskModal.appendChild(addTaskModalBody);
     document.body.appendChild(addTaskModal);
 
+    const dueDateContainer = document.createElement('div');
+    dueDateContainer.id = 'due-date-container';
+    taskForm.appendChild(dueDateContainer);
+    
+    const dueDateLabel = document.createElement('label');
+    dueDateLabel.id = 'due-date-label'
+    dueDateLabel.textContent = 'Due Date';
+    dueDateContainer.appendChild(dueDateLabel);
+    
+    const dueDate = document.createElement('input');
+    dueDate.id = 'due-date';
+    dueDate.type = 'date';
+    dueDateContainer.appendChild(dueDate);
+
+    const addTaskButton = document.createElement('button');
+    addTaskButton.id = 'add-task-button';
+    addTaskButton.textContent = 'Add Task';
+    taskForm.appendChild(addTaskButton);
+
+
     //make button for opening/closing the modal for adding tasks
     const openTaskModalButton = document.getElementById('addTaskModalOpen');
     const closeTaskModalButton = document.getElementById('task-modal-close');
@@ -234,6 +272,11 @@ const pageLoad = () => {
     openTaskModalButton.addEventListener('click', () => {
         const modal = document.getElementById('modal-task');
         openModal(modal);
+        currentDate = getDate();
+        dueDate.min = currentDate;
+        dueDate.valueAsDate = new Date(currentDate);
+        // dueDate.valueAsDate = new Date(currentDate.getFullYear(), currentDate.getMonth(),
+        // currentDate.getDay());
     })
 
 
