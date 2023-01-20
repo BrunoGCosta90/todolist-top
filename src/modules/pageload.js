@@ -217,6 +217,7 @@ const pageLoad = () => {
     mediumPrioInput.name = 'priority';
     mediumPrioInput.id = 'medium';
     mediumPrioInput.value = 'medium';
+    mediumPrioInput.checked = true;
     const mediumPrioLabel = document.createElement('label');
     mediumPrioLabel.setAttribute('for', 'medium');
     mediumPrioLabel.textContent = 'Medium';
@@ -258,10 +259,24 @@ const pageLoad = () => {
     dueDate.type = 'date';
     dueDateContainer.appendChild(dueDate);
 
+    const projectSelectContainer = document.createElement('div');
+    projectSelectContainer.id = 'project-select-container';
+    const projectSelectLabel = document.createElement('label');
+    projectSelectLabel.id = 'project-select-label';
+    projectSelectLabel.textContent = 'Project';
+    projectSelectContainer.appendChild(projectSelectLabel);
+    const projectSelect = document.createElement('select');
+    projectSelect.id = 'project-select';
+    projectSelectContainer.appendChild(projectSelect);
+    taskForm.appendChild(projectSelectContainer);
+
+
     const addTaskButton = document.createElement('button');
     addTaskButton.id = 'add-task-button';
     addTaskButton.textContent = 'Add Task';
     taskForm.appendChild(addTaskButton);
+
+    
 
 
     //make button for opening/closing the modal for adding tasks

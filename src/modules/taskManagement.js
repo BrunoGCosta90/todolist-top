@@ -1,4 +1,4 @@
-const addTask = () => {
+const addTask = (title, desciption, priority, dueDate, project) => {
 
 }
 
