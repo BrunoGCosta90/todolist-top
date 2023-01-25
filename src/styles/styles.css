@@ -174,31 +174,35 @@ header > img:hover {
 }
 
 #add-task-form {
-    display: grid;
+    /* display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: 1fr 3fr 1fr 1fr 1fr;
-    row-gap: 5px;
+    row-gap: 5px; */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px
 }
 
 #task-title {
-    /* width: 100%;
-    box-sizing: border-box; */
-    grid-column: 1 / 5;
-    grid-row: 1 / 2;
+    width: 100%;
+    /* box-sizing: border-box; */
+    /* grid-column: 1 / 5;
+    grid-row: 1 / 2; */
 }
 
 #task-description {
-    /* height: 40px;
+    /* height: 40px; */
     width: 100%;
-    box-sizing: border-box;*/
+    height: 80px;
+    /*box-sizing: border-box;*/
     resize: none;
-    grid-column: 1 / 5;
-    grid-row: 2 / 4;
+    /* grid-column: 1 / 5;
+    grid-row: 2 / 4; */
 }
 
 #priority-container {
-    grid-column: 1 / 3;
-    grid-row: 4 / 5;
+    /* grid-column: 1 / 3;
+    grid-row: 4 / 5; */
     display: flex;
     align-self: center;
     justify-content: space-around;
@@ -210,7 +214,8 @@ header > img:hover {
 
 #priority-container > label {
     border-radius: 6px;
-    padding: 1px 3px 1px 3px;
+    padding: 1px 8px 1px 8px;
+    margin-right: 11px;
 }
 
 #priority-container > input[id='low']+label {
@@ -242,23 +247,28 @@ header > img:hover {
     color: white;
 }
 
+#priority-label {
+    margin-right: 20px;
+    padding-left: 0 !important; 
+}
+
 #due-date-container {
-    grid-column: 3 / 5;
-    grid-row: 4 / 5;
+    /* grid-column: 3 / 5;
+    grid-row: 4 / 5; */
     display: flex;
-    align-self: center;
-    justify-content: right;
+    margin-left: 34.5px;
+
 }
 
 #due-date-label {
     margin-top: 2px;
-    margin-right: 10px;
+    margin-right: 20px;
 }
 
 #project-select-container {
-    grid-column: 1 / 4;
-    grid-row: 5 / 6;
-    padding-left: 9px;
+    /* grid-column: 1 / 4;
+    grid-row: 5 / 6; 
+    padding-left: 9px; */
 }
 
 #project-select-label {
@@ -270,8 +280,10 @@ header > img:hover {
 }
 
 #add-task-button {
-    grid-column: 4 / 5;
-    grid-row: 5 / 6;
+    /* grid-column: 4 / 5;
+    grid-row: 5 / 6; */
+    margin-left: 17px;
+    width: 150px;
 }
 
 

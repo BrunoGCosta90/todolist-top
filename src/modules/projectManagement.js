@@ -33,6 +33,15 @@ const addProject = () => {
    // }
 }
 
+// const checkInboxProject = () => {
+//    if (!(localStorage.getItem('projects'))) {
+//       const projects = ['Inbox'];
+//       localStorage.setItem('projects', JSON.stringify(projects));
+//    }
+// }
 
+const updateProjectSelector = () => {
+   
+}
 
-export { addProject }
+export { addProject, updateProjectSelector }

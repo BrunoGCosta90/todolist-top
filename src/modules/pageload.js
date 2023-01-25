@@ -2,12 +2,19 @@ import MenuIcon from '../icons/menu.svg';
 import InboxIcon from '../icons/inbox.svg';
 import TodayIcon from '../icons/calendar-today.svg';
 import UpcomingIcon from '../icons/calendar-month.svg';
-import { addProject } from './projectManagement.js';
+import { addProject, updateProjectSelector } from './projectManagement.js';
 import { times } from 'lodash';
 import { getDate } from './getCurrentDate.js';
+import { addTask, addTodoList } from './taskManagement';
 
 const pageLoad = () => {
     let currentDate;
+    addTodoList();
+    if (!(localStorage.getItem('projects'))) {
+        const projects = ['Inbox'];
+        localStorage.setItem('projects', JSON.stringify(projects));
+     }
+    //test();
     //title
     //document.title = "ToDo";
 
@@ -185,12 +192,14 @@ const pageLoad = () => {
     taskTittle.name = 'task-title';
     taskTittle.type = 'text';
     taskTittle.placeholder = 'Task title';
+    taskTittle.required = true;
     taskForm.appendChild(taskTittle);
 
     const taskDescription = document.createElement('textarea');
     taskDescription.id = 'task-description';
-    taskDescription.name = 'task-desciption';
+    taskDescription.name = 'task-description';
     taskDescription.placeholder = 'Task description';
+    taskDescription.maxLength = 385;
     taskForm.appendChild(taskDescription);
 
     const priorityContainer = document.createElement('div');
@@ -267,6 +276,10 @@ const pageLoad = () => {
     projectSelectContainer.appendChild(projectSelectLabel);
     const projectSelect = document.createElement('select');
     projectSelect.id = 'project-select';
+    const inboxOption = document.createElement('option');
+    inboxOption.value = 'Inbox';
+    inboxOption.text = 'Inbox';
+    projectSelect.add(inboxOption);
     projectSelectContainer.appendChild(projectSelect);
     taskForm.appendChild(projectSelectContainer);
 
@@ -276,6 +289,8 @@ const pageLoad = () => {
     addTaskButton.textContent = 'Add Task';
     taskForm.appendChild(addTaskButton);
 
+    addTaskButton.addEventListener('click', addTask/*(taskTittle.textContent, taskDescription, document.querySelector('input[name="priority"]:checked').value,
+    dueDate.value, projectSelectContainer.value)*/);
     
 
 
@@ -290,6 +305,7 @@ const pageLoad = () => {
         currentDate = getDate();
         dueDate.min = currentDate;
         dueDate.valueAsDate = new Date(currentDate);
+        //updateProjectList();
         // dueDate.valueAsDate = new Date(currentDate.getFullYear(), currentDate.getMonth(),
         // currentDate.getDay());
     })
