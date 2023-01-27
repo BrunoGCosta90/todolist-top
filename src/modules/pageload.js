@@ -15,17 +15,17 @@ const pageLoad = () => {
         localStorage.setItem('projects', JSON.stringify(projects));
      }
     //test();
-    //title
-    //document.title = "ToDo";
+    //tittle
+    //document.tittle = "ToDo";
 
     // header
     const header = document.createElement('header');
     const headerMenuIcon = new Image();
     headerMenuIcon.src = MenuIcon;
     header.appendChild(headerMenuIcon);
-    const headerTitle = document.createElement('div');
-    headerTitle.textContent = 'ToDo';
-    header.appendChild(headerTitle);
+    const headerTittle = document.createElement('div');
+    headerTittle.textContent = 'ToDo';
+    header.appendChild(headerTittle);
     document.body.appendChild(header);
 
     //sidebar
@@ -90,10 +90,10 @@ const pageLoad = () => {
     const addProjectModalHeader = document.createElement('div');
     addProjectModalHeader.classList.add('modal-header');
     addProjectModal.appendChild(addProjectModalHeader);
-    const addProjectModalTitle = document.createElement('div');
-    addProjectModalTitle.classList.add('modal-title');
-    addProjectModalTitle.textContent = 'Add Project';
-    addProjectModalHeader.appendChild(addProjectModalTitle);
+    const addProjectModalTittle = document.createElement('div');
+    addProjectModalTittle.classList.add('modal-tittle');
+    addProjectModalTittle.textContent = 'Add Project';
+    addProjectModalHeader.appendChild(addProjectModalTittle);
     const addProjectModalClose = document.createElement('button');
     addProjectModalClose.classList.add('close-button');
     addProjectModalClose.id = 'project-modal-close';
@@ -135,6 +135,7 @@ const pageLoad = () => {
         overlay.classList.add('active')
     }
 
+  
     function closeModal(modal) {
         if (modal == null) return;
         modal.classList.remove('active')
@@ -169,10 +170,10 @@ const pageLoad = () => {
     addTaskModalHeader.classList.add('modal-header');
     addTaskModal.appendChild(addTaskModalHeader);
 
-    const addTaskModalTitle = document.createElement('div');
-    addTaskModalTitle.classList.add('modal-title');
-    addTaskModalTitle.textContent = 'New Task';
-    addTaskModalHeader.appendChild(addTaskModalTitle);
+    const addTaskModalTittle = document.createElement('div');
+    addTaskModalTittle.classList.add('modal-tittle');
+    addTaskModalTittle.textContent = 'New Task';
+    addTaskModalHeader.appendChild(addTaskModalTittle);
 
     const addTaskModalClose = document.createElement('button');
     addTaskModalClose.classList.add('close-button');
@@ -184,14 +185,13 @@ const pageLoad = () => {
     addTaskModalBody.id = 'add-task-modal-body';
 
     const taskForm = document.createElement('form');
-    taskForm.method = 'post';
     taskForm.id = 'add-task-form';
 
     const taskTittle = document.createElement('input');
-    taskTittle.id = 'task-title';
-    taskTittle.name = 'task-title';
+    taskTittle.id = 'task-tittle';
+    taskTittle.name = 'task-tittle';
     taskTittle.type = 'text';
-    taskTittle.placeholder = 'Task title';
+    taskTittle.placeholder = 'Task tittle';
     taskTittle.required = true;
     taskForm.appendChild(taskTittle);
 
@@ -200,6 +200,7 @@ const pageLoad = () => {
     taskDescription.name = 'task-description';
     taskDescription.placeholder = 'Task description';
     taskDescription.maxLength = 385;
+    taskDescription.required = true;
     taskForm.appendChild(taskDescription);
 
     const priorityContainer = document.createElement('div');
@@ -227,6 +228,7 @@ const pageLoad = () => {
     mediumPrioInput.id = 'medium';
     mediumPrioInput.value = 'medium';
     mediumPrioInput.checked = true;
+    mediumPrioInput.required = true;
     const mediumPrioLabel = document.createElement('label');
     mediumPrioLabel.setAttribute('for', 'medium');
     mediumPrioLabel.textContent = 'Medium';
@@ -286,6 +288,7 @@ const pageLoad = () => {
 
     const addTaskButton = document.createElement('button');
     addTaskButton.id = 'add-task-button';
+    addTaskButton.type = 'button';
     addTaskButton.textContent = 'Add Task';
     taskForm.appendChild(addTaskButton);
 
@@ -314,6 +317,23 @@ const pageLoad = () => {
     closeTaskModalButton.addEventListener('click', () => {
         const modal = document.getElementById('modal-task');
         closeModal(modal);
+    })
+
+    const errorModal = document.createElement('div');
+    errorModal.id = 'task-name-error-modal';
+    errorModal.classList.add('modal');
+    document.body.appendChild(errorModal);
+    const errorMsg = document.createElement('div');
+    errorMsg.textContent = 'A task with the same tittle already exists. Please pick another tittle.';
+    errorMsg.id = 'tittle-error-message';
+    errorModal.appendChild(errorMsg);
+    const errorModalClose = document.createElement('button');
+    errorModalClose.id = 'task-name-error-close';
+    errorModalClose.textContent = 'OK';
+    errorModal.appendChild(errorModalClose);
+
+    errorModalClose.addEventListener('click', () => {
+        errorModal.classList.remove('active');
     })
 
 

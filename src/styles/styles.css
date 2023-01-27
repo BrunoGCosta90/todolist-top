@@ -96,7 +96,7 @@ header > img:hover {
     border-bottom: 1px solid gainsboro;
 }
 
-.modal-title {
+.modal-tittle {
     font-size: 1.25rem;
     font-weight: bold;
 }
@@ -183,7 +183,7 @@ header > img:hover {
     gap: 5px
 }
 
-#task-title {
+#task-tittle {
     width: 100%;
     /* box-sizing: border-box; */
     /* grid-column: 1 / 5;
