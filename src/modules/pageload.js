@@ -5,7 +5,7 @@ import UpcomingIcon from '../icons/calendar-month.svg';
 import { addProject, updateProjectSelector } from './projectManagement.js';
 import { times } from 'lodash';
 import { getDate } from './getCurrentDate.js';
-import { addTask, addTodoList } from './taskManagement';
+import { addTask, addTasksToPage, addTodoList } from './taskManagement';
 
 const pageLoad = () => {
     let currentDate;
@@ -148,6 +148,7 @@ const pageLoad = () => {
     //main content
     const content = document.createElement('div');
     content.classList.add('content');
+    content.id = 'content';
     document.body.appendChild(content);
 
     const addTaskButtonContainer = document.createElement('div');
@@ -215,7 +216,7 @@ const pageLoad = () => {
     lowPrioInput.type = 'radio';
     lowPrioInput.name = 'priority';
     lowPrioInput.id = 'low';
-    lowPrioInput.value = 'low';
+    lowPrioInput.value = 'Low';
     const lowPrioLabel = document.createElement('label');
     lowPrioLabel.setAttribute('for', 'low');
     lowPrioLabel.textContent = 'Low';
@@ -226,7 +227,7 @@ const pageLoad = () => {
     mediumPrioInput.type = 'radio';
     mediumPrioInput.name = 'priority';
     mediumPrioInput.id = 'medium';
-    mediumPrioInput.value = 'medium';
+    mediumPrioInput.value = 'Medium';
     mediumPrioInput.checked = true;
     mediumPrioInput.required = true;
     const mediumPrioLabel = document.createElement('label');
@@ -244,7 +245,7 @@ const pageLoad = () => {
     highPrioInput.type = 'radio';
     highPrioInput.name = 'priority';
     highPrioInput.id = 'high';
-    highPrioInput.value = 'high';
+    highPrioInput.value = 'High';
     const highPrioLabel = document.createElement('label');
     highPrioLabel.setAttribute('for', 'high');
     highPrioLabel.textContent = 'High';
@@ -336,6 +337,9 @@ const pageLoad = () => {
         errorModal.classList.remove('active');
     })
 
+    const tasksContainer = document.createElement('div');
+    tasksContainer.id = 'tasks-container';
+    content.appendChild(tasksContainer);
 
     //footer
     const footer = document.createElement('footer');
@@ -343,7 +347,9 @@ const pageLoad = () => {
     footerAuthor.textContent = 'Placeholder footer';
     footer.appendChild(footerAuthor);
     document.body.appendChild(footer);
-
+    
+    // retrieve and add tasks to page
+    addTasksToPage();
 
 }
 

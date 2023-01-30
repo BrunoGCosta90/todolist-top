@@ -151,6 +151,11 @@ header > img:hover {
 .content {
     grid-row: 2 / 3;
     grid-column: 2 / 3;
+
+}
+
+#tasks-container {
+    padding: 8px;
 }
 
 .add-task-container {
@@ -286,6 +291,52 @@ header > img:hover {
     width: 150px;
 }
 
+.task-div {
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+    border: 2px solid var(--goldenrodColor);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.task-checkbox {
+    margin-left: 15px;
+    width: 17px;
+}
+
+.task-tittle {
+    margin: 5px 0 5px 8px;
+}
+
+.task-priority-bar {
+    width: 12px;
+    border-right: 1px solid var(--goldenrodColor);
+}
+
+.task-header {
+    display: flex;
+    width: 100%;
+    font-size: 24px;
+}
+
+.expanded {
+    border-bottom: 1px solid var(--goldenrodColor);
+}
+
+.task-body {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.task-body > * {
+    margin: 5px;
+}
+
+.task-description {
+    width: 100%;
+    border: 1px solid grey;
+}
 
 footer {
     grid-row: 3 / 4;
