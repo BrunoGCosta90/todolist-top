@@ -327,15 +327,23 @@ header > img:hover {
 .task-body {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
 }
 
 .task-body > * {
-    margin: 5px;
+    margin: 7px 7px;
+    display: flex;
 }
 
 .task-description {
     width: 100%;
     border: 1px solid grey;
+    padding: 3px 6px;
+    border-radius: 9px;
+}
+
+.task-containers > label{
+    margin-right: 20px;
 }
 
 footer {

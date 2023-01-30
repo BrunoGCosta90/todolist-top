@@ -93,17 +93,35 @@ const drawTask = (tittle, description, priority, dueDate, project) => {
             taskDescription.textContent = description;
             taskDescription.classList.add('task-description');
             taskBody.appendChild(taskDescription);
+            const taskPriorityContainer = document.createElement('div');
+            taskPriorityContainer.classList.add('task-containers');
+            taskBody.appendChild(taskPriorityContainer);
+            const taskPriorityLabel = document.createElement('label');
+            taskPriorityLabel.textContent = 'Priority:';
+            taskPriorityContainer.appendChild(taskPriorityLabel);
             const taskPriority = document.createElement('div');
             taskPriority.textContent = priority;
-            taskBody.appendChild(taskPriority);
+            taskPriorityContainer.appendChild(taskPriority);
+            const taskDueDateContainer = document.createElement('div');
+            taskDueDateContainer.classList.add('task-containers');
+            taskBody.appendChild(taskDueDateContainer);
+            const taskDueDateLabel = document.createElement('label');
+            taskDueDateLabel.textContent = 'Due Date:';
+            taskDueDateContainer.appendChild(taskDueDateLabel);
             const taskDueDate = document.createElement('input');
             taskDueDate.type = 'date';
             taskDueDate.value = dueDate;
             taskDueDate.disabled = true;
-            taskBody.appendChild(taskDueDate);
+            taskDueDateContainer.appendChild(taskDueDate);
+            const taskProjectContainer = document.createElement('div');
+            taskProjectContainer.classList.add('task-containers');
+            taskBody.appendChild(taskProjectContainer);
+            const taskProjectLabel = document.createElement('label');
+            taskProjectLabel.textContent = 'Project:';
+            taskProjectContainer.appendChild(taskProjectLabel);
             const taskProject = document.createElement('div');
             taskProject.textContent = project;
-            taskBody.appendChild(taskProject);
+            taskProjectContainer.appendChild(taskProject);
         } else {
             e.currentTarget.classList.remove('expanded');
             while (e.currentTarget.nextSibling.childNodes.length > 0){
