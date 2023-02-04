@@ -156,6 +156,9 @@ header > img:hover {
 
 #tasks-container {
     padding: 8px;
+    display: grid;
+    grid-template-columns: 20px 1fr;
+    grid-auto-rows: auto;
 }
 
 .add-task-container {
@@ -188,7 +191,7 @@ header > img:hover {
     gap: 5px
 }
 
-#task-tittle {
+#task-tittle-input {
     width: 100%;
     /* box-sizing: border-box; */
     /* grid-column: 1 / 5;
@@ -292,6 +295,7 @@ header > img:hover {
 }
 
 .task-div {
+    grid-column: 2 / 3;
     display: flex;
     flex-direction: column;
     margin: 5px;
@@ -320,7 +324,7 @@ header > img:hover {
     font-size: 24px;
 }
 
-.expanded {
+.expanded-task {
     border-bottom: 1px solid var(--goldenrodColor);
 }
 
@@ -331,8 +335,10 @@ header > img:hover {
 }
 
 .task-body > * {
-    margin: 7px 7px;
+    margin: 5px 10px;
     display: flex;
+    
+    
 }
 
 .task-description {
@@ -344,6 +350,24 @@ header > img:hover {
 
 .task-containers > label{
     margin-right: 20px;
+}
+
+.finished {
+    opacity: 0.4;
+}
+
+.past-due {
+    grid-column: 1 / 2;
+    margin-top: 15px;
+    margin-left: 5px;
+    color: red;
+    font-weight: 800;
+    font-size: 22px;
+}
+
+.expired {
+    border-color: red;
+    color: red;
 }
 
 footer {

@@ -5,7 +5,8 @@ import UpcomingIcon from '../icons/calendar-month.svg';
 import { addProject, updateProjectSelector } from './projectManagement.js';
 import { times } from 'lodash';
 import { getDate } from './getCurrentDate.js';
-import { addTask, addTasksToPage, addTodoList } from './taskManagement';
+import { addTask, addTasksToPage, addTodoList, checkPastDueDate } from './taskManagement';
+import { format } from 'date-fns';
 
 const pageLoad = () => {
     let currentDate;
@@ -115,6 +116,7 @@ const pageLoad = () => {
     openModalButton.addEventListener('click', () => {
         const modal = document.getElementById('modal-project');
         openModal(modal);
+        checkPastDueDate();
     })
 
     overlay.addEventListener('click', () => {
@@ -189,8 +191,8 @@ const pageLoad = () => {
     taskForm.id = 'add-task-form';
 
     const taskTittle = document.createElement('input');
-    taskTittle.id = 'task-tittle';
-    taskTittle.name = 'task-tittle';
+    taskTittle.id = 'task-tittle-input';
+    taskTittle.name = 'task-tittle-input';
     taskTittle.type = 'text';
     taskTittle.placeholder = 'Task tittle';
     taskTittle.required = true;
@@ -306,9 +308,15 @@ const pageLoad = () => {
     openTaskModalButton.addEventListener('click', () => {
         const modal = document.getElementById('modal-task');
         openModal(modal);
-        currentDate = getDate();
+        //currentDate = getDate();
+        currentDate = format(new Date(), 'yyyy-MM-dd');
         dueDate.min = currentDate;
-        dueDate.valueAsDate = new Date(currentDate);
+        dueDate.value = currentDate;
+        checkPastDueDate();
+        //dueDate.valueAsDate = new Date(currentDate);
+
+        //let dataNormal = format(new Date(), 'yyy-MM-dd');
+        //console.log(dataNormal, currentDate);
         //updateProjectList();
         // dueDate.valueAsDate = new Date(currentDate.getFullYear(), currentDate.getMonth(),
         // currentDate.getDay());
@@ -350,6 +358,7 @@ const pageLoad = () => {
     
     // retrieve and add tasks to page
     addTasksToPage();
+    checkPastDueDate();
 
 }
 
