@@ -148,6 +148,8 @@ header > img:hover {
     
 }*/
 
+
+
 .content {
     grid-row: 2 / 3;
     grid-column: 2 / 3;
@@ -322,6 +324,12 @@ header > img:hover {
     display: flex;
     width: 100%;
     font-size: 24px;
+}
+.task-header > img {
+    height: 0.8em;
+    align-self: center;
+    margin-right: 25px;
+    margin-left: auto;
 }
 
 .expanded-task {

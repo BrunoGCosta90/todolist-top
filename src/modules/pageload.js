@@ -2,7 +2,7 @@ import MenuIcon from '../icons/menu.svg';
 import InboxIcon from '../icons/inbox.svg';
 import TodayIcon from '../icons/calendar-today.svg';
 import UpcomingIcon from '../icons/calendar-month.svg';
-import { addProject, updateProjectSelector } from './projectManagement.js';
+import { addProject, updateProjectSelector, addProjectsToSidebar } from './projectManagement.js';
 import { times } from 'lodash';
 import { getDate } from './getCurrentDate.js';
 import { addTask, addTasksToPage, addTodoList, checkPastDueDate } from './taskManagement';
@@ -79,10 +79,10 @@ const pageLoad = () => {
     projectsLabel.id = 'projectSection';
     sidebar.appendChild(projectsLabel);
 
-    const addProjectButton = document.createElement('button');
-    addProjectButton.textContent = '+ Add project';
-    addProjectButton.id = 'addProjectModalOpen';
-    sidebar.appendChild(addProjectButton);
+    const addProjectModalButton = document.createElement('button');
+    addProjectModalButton.textContent = '+ Add project';
+    addProjectModalButton.id = 'addProjectModalOpen';
+    sidebar.appendChild(addProjectModalButton);
 
     //modal for adding project
     const addProjectModal = document.createElement('div');
@@ -100,8 +100,20 @@ const pageLoad = () => {
     addProjectModalClose.id = 'project-modal-close';
     addProjectModalHeader.appendChild(addProjectModalClose);
     const addProjectModalBody = document.createElement('div');
+    addProjectModalBody.id = 'modal-body';
     addProjectModalBody.classList.add('modal-body');
     addProjectModal.appendChild(addProjectModalBody);
+    const addProjectTittle = document.createElement('input');
+    addProjectTittle.id = 'add-project-tittle';
+    addProjectTittle.minLength = 3;
+    addProjectTittle.type = 'text';
+    addProjectModalBody.appendChild(addProjectTittle);
+    const addProjectButton = document.createElement('button');
+    addProjectButton.textContent = 'Add Project';
+    addProjectButton.type = 'button';
+    addProjectModalBody.appendChild(addProjectButton);
+
+    addProjectButton.addEventListener('click', addProject);
     
 
     document.body.appendChild(addProjectModal);
@@ -138,12 +150,13 @@ const pageLoad = () => {
     }
 
   
-    function closeModal(modal) {
+    /*function closeModal(modal) {
         if (modal == null) return;
         modal.classList.remove('active')
         overlay.classList.remove('active')
-    }
+    }*/
 
+    
     //overlay div for open modal
     
 
@@ -333,7 +346,7 @@ const pageLoad = () => {
     errorModal.classList.add('modal');
     document.body.appendChild(errorModal);
     const errorMsg = document.createElement('div');
-    errorMsg.textContent = 'A task with the same tittle already exists. Please pick another tittle.';
+    errorMsg.textContent = 'A task with the same tittle already exists. Please, pick another tittle.';
     errorMsg.id = 'tittle-error-message';
     errorModal.appendChild(errorMsg);
     const errorModalClose = document.createElement('button');
@@ -349,6 +362,23 @@ const pageLoad = () => {
     tasksContainer.id = 'tasks-container';
     content.appendChild(tasksContainer);
 
+    const errorProjectModal = document.createElement('div');
+    errorProjectModal .id = 'project-name-error-modal';
+    errorProjectModal .classList.add('modal');
+    document.body.appendChild(errorProjectModal );
+    const errorProjectMsg = document.createElement('div');
+    errorProjectMsg.textContent = 'A project with the same tittle already exists. Please, pick another tittle.';
+    errorProjectMsg.id = 'project-tittle-error-message';
+    errorProjectModal .appendChild(errorProjectMsg);
+    const errorProjectModalClose = document.createElement('button');
+    errorProjectModalClose.id = 'project-name-error-close';
+    errorProjectModalClose.textContent = 'OK';
+    errorProjectModal .appendChild(errorProjectModalClose);
+
+    errorProjectModalClose.addEventListener('click', () => {
+        errorProjectModal.classList.remove('active');
+    })
+
     //footer
     const footer = document.createElement('footer');
     const footerAuthor = document.createElement('div');
@@ -357,9 +387,17 @@ const pageLoad = () => {
     document.body.appendChild(footer);
     
     // retrieve and add tasks to page
-    addTasksToPage();
+    addTasksToPage('Inbox');
     checkPastDueDate();
+    addProjectsToSidebar();
+    updateProjectSelector();
 
 }
 
-export { pageLoad };
+const closeModal = (modal) => {
+    if (modal == null) return;
+    modal.classList.remove('active')
+    overlay.classList.remove('active')
+}
+
+export { pageLoad, closeModal };

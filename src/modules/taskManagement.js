@@ -1,4 +1,5 @@
 import {isAfter, format, parseISO} from "date-fns";
+import TrashIcon from '../icons/trash-can-outline.svg';
 
 
 const addTask = (/*title, description, priority, dueDate, project*/) => {
@@ -42,11 +43,20 @@ const taskNameError = () => {
     errorModal.classList.add('active');
 }
 
-const addTasksToPage = () => {
+const addTasksToPage = (projectTittle) => {
     const toDo = JSON.parse(localStorage.getItem('todo'));
+    //document.getElementById('tasks-container').innerHTML = '';
     if (toDo[0] != undefined) {
-        for (let i = 0; i < toDo.length; i++) {
-            drawTask(toDo[i].tittle, toDo[i].description, toDo[i].priority, toDo[i].dueDate, toDo[i].project, toDo[i].finished);
+        if (projectTittle == "Inbox") {
+            for (let i = 0; i < toDo.length; i++) {
+                drawTask(toDo[i].tittle, toDo[i].description, toDo[i].priority, toDo[i].dueDate, toDo[i].project, toDo[i].finished);
+            }
+        } else {
+            for (let i = 0; i < toDo.length; i++) {
+                if (toDo[i].project == projectTittle){
+                    drawTask(toDo[i].tittle, toDo[i].description, toDo[i].priority, toDo[i].dueDate, toDo[i].project, toDo[i].finished);
+                }
+            }
         }
     }
 }
@@ -115,6 +125,28 @@ const drawTask = (tittle, description, priority, dueDate, project, finished) => 
     taskTittle.classList.add('task-tittle')
     taskTittle.id = 'task-tittle';
     taskHeader.appendChild(taskTittle);
+    const trashButton = new Image();
+    trashButton.src = TrashIcon;
+    trashButton.addEventListener('click', (e) => {
+        //console.log(e.currentTarget.parentElement.childNodes[2].textContent);
+        const thisTask = e.currentTarget.parentElement.parentElement;
+        const taskTittle = e.currentTarget.parentElement.childNodes[2].textContent;
+        const todo = JSON.parse(localStorage.getItem('todo'));
+        for (let i = 0; i < todo.length; i++){
+            if (todo[i].tittle == taskTittle){
+                todo.splice(i, 1);
+                break;
+            }
+        }
+        localStorage.setItem('todo', JSON.stringify(todo));
+        if (thisTask.previousSibling.textContent == '!' && thisTask.previousSibling != null){
+            thisTask.previousSibling.remove();
+        }
+        thisTask.remove();
+    })
+    taskHeader.appendChild(trashButton);
+
+
     const taskBody = document.createElement('div');
     taskBody.classList.add('task-body');
     task.appendChild(taskBody);
@@ -183,7 +215,9 @@ const checkPastDueDate = () => {
     for (let task of tasksContainer.querySelectorAll('.task-div')){
         for (let i = 0; i < tasks.length; i++){
             if (task.firstChild.textContent == tasks[i].tittle){
-                if (!isAfter(parseISO(tasks[i].dueDate), parseISO(format(new Date(), 'yyyy-MM-dd')))){
+                //if (!isAfter(parseISO(tasks[i].dueDate), parseISO(format(new Date(), 'yyyy-MM-dd')))){
+                    if (tasks[i].dueDate < format(new Date(), "yyyy-MM-dd")){
+                   // console.log(tasks[i].tittle, tasks[i].dueDate < format(new Date(), "yyyy-MM-dd"));
                     addWarning(task);
                 }
             }
@@ -212,4 +246,26 @@ const addWarning = (task) => {
     
 }
 
-export { addTask, addTodoList, addTasksToPage, checkPastDueDate}
+const cleanTasksContainer = () => {
+    const tasksContainer = document.getElementById('tasks-container');
+    while (tasksContainer.childNodes.length > 0){
+        tasksContainer.firstChild.remove();
+    }
+}
+
+/*const deleteTask = (e) => {
+    console.log(e.currentTarget.parentElement.childNodes[2].textContent);
+    const thisTask = e.currentTarget.parentElement.parentElement;
+    const taskTittle = e.currentTarget.parentElement.childNodes[2].textContent;
+    const todo = JSON.parse(localStorage.getItem('todo'));
+    for (let i = 0; i < todo.length; i++){
+        if (todo[i].tittle == taskTittle){
+            todo = todo.splice(i, 1);
+            break;
+        }
+    }
+    localStorage.setItem('todo', JSON.stringify(todo));
+    thisTask.remove();
+}*/
+
+export { addTask, addTodoList, addTasksToPage, checkPastDueDate, cleanTasksContainer}
