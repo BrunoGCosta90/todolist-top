@@ -1,5 +1,5 @@
 import { closeModal } from "./pageload";
-import { addTasksToPage, cleanTasksContainer } from "./taskManagement";
+import { addTasksToPage, checkPastDueDate, cleanTasksContainer } from "./taskManagement";
 
 const addProject = () => {
    // const openModalButton = document.getElementById('addProject');
@@ -109,6 +109,7 @@ const addProjectsToSidebar = () => {
          newButton.addEventListener('click', (e) => {
             cleanTasksContainer();
             addTasksToPage(e.currentTarget.textContent);
+            checkPastDueDate();
          });
          sidebar.appendChild(newButton);
       }

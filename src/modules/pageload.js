@@ -5,7 +5,7 @@ import UpcomingIcon from '../icons/calendar-month.svg';
 import { addProject, updateProjectSelector, addProjectsToSidebar } from './projectManagement.js';
 import { times } from 'lodash';
 import { getDate } from './getCurrentDate.js';
-import { addTask, addTasksToPage, addTodoList, checkPastDueDate } from './taskManagement';
+import { addTask, addTasksToPage, addTodoList, checkPastDueDate, cleanTasksContainer } from './taskManagement';
 import { format } from 'date-fns';
 
 const pageLoad = () => {
@@ -52,6 +52,11 @@ const pageLoad = () => {
     //inboxButton.classList.add('icon', 'icon-inbox');
     inboxButton.appendChild(inboxButtonIcon);
     inboxButton.appendChild(inboxText);
+    inboxButton.addEventListener('click', (e) => {
+        cleanTasksContainer();
+        addTasksToPage('Inbox');
+        checkPastDueDate();
+    });
     sidebar.appendChild(inboxButton);
 
     const todayButton = document.createElement('button');
