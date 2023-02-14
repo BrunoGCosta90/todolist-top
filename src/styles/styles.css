@@ -116,8 +116,29 @@ header > img:hover {
 
 .modal-body {
     padding: 10px 15px;
+    display: flex;
 }
 
+.modal-body > input {
+    width: 70%;
+}
+
+.modal-body > button {
+    width: 25%;
+    margin-left: auto;
+}
+
+.error {
+    display: flex;
+    padding: 10px;
+    flex-direction: column;
+    align-items: center;
+    width: fit-content;
+}
+
+.error > div {
+    margin-bottom: 5px;
+}
 /* overlay */
 #overlay {
     position: fixed;

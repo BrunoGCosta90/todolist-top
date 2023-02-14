@@ -3,8 +3,6 @@ import InboxIcon from '../icons/inbox.svg';
 import TodayIcon from '../icons/calendar-today.svg';
 import UpcomingIcon from '../icons/calendar-month.svg';
 import { addProject, updateProjectSelector, addProjectsToSidebar } from './projectManagement.js';
-import { times } from 'lodash';
-import { getDate } from './getCurrentDate.js';
 import { addTask, addTasksToPage, addTodoList, checkPastDueDate, cleanTasksContainer } from './taskManagement';
 import { format } from 'date-fns';
 
@@ -14,12 +12,7 @@ const pageLoad = () => {
     if (!(localStorage.getItem('projects'))) {
         const projects = ['Inbox'];
         localStorage.setItem('projects', JSON.stringify(projects));
-     }
-    //test();
-    //tittle
-    //document.tittle = "ToDo";
-
-    // header
+    }
     const header = document.createElement('header');
     const headerMenuIcon = new Image();
     headerMenuIcon.src = MenuIcon;
@@ -40,16 +33,11 @@ const pageLoad = () => {
     sidebar.appendChild(homeLabel);
 
     const inboxButton = document.createElement('button');
-    //inboxButton.textContent = 'Inbox';
     const inboxButtonIcon = new Image();
     inboxButtonIcon.src = InboxIcon;
     inboxButtonIcon.classList.add('icon');
     const inboxText = document.createElement('div');
     inboxText.textContent = 'Inbox';
-    //const inboxButtonIcon = document.createElement('div');
-    //inboxButtonIcon.textContent = 'Inbox';
-    //inboxButtonIcon.classList.add('icon', 'icon-inbox');
-    //inboxButton.classList.add('icon', 'icon-inbox');
     inboxButton.appendChild(inboxButtonIcon);
     inboxButton.appendChild(inboxText);
     inboxButton.addEventListener('click', (e) => {
@@ -67,6 +55,11 @@ const pageLoad = () => {
     todayText.textContent = 'Today';
     todayButton.appendChild(todayButtonIcon);
     todayButton.appendChild(todayText);
+    todayButton.addEventListener('click', () => {
+        cleanTasksContainer();
+        addTasksToPage('Today');
+        checkPastDueDate();
+    });
     sidebar.appendChild(todayButton);
 
     const upcomingButton = document.createElement('button');
@@ -74,9 +67,14 @@ const pageLoad = () => {
     upcomingButtonIcon.src = UpcomingIcon;
     upcomingButtonIcon.classList.add('icon');
     const upcomingText = document.createElement('div');
-    upcomingText.textContent = 'Upcoming';
+    upcomingText.textContent = 'Upcoming this week';
     upcomingButton.appendChild(upcomingButtonIcon);
     upcomingButton.appendChild(upcomingText);
+    upcomingButton.addEventListener('click', () => {
+        cleanTasksContainer();
+        addTasksToPage('Week');
+        checkPastDueDate();
+    });
     sidebar.appendChild(upcomingButton);
 
     const projectsLabel = document.createElement('div');
@@ -119,7 +117,7 @@ const pageLoad = () => {
     addProjectModalBody.appendChild(addProjectButton);
 
     addProjectButton.addEventListener('click', addProject);
-    
+
 
     document.body.appendChild(addProjectModal);
 
@@ -154,17 +152,6 @@ const pageLoad = () => {
         overlay.classList.add('active')
     }
 
-  
-    /*function closeModal(modal) {
-        if (modal == null) return;
-        modal.classList.remove('active')
-        overlay.classList.remove('active')
-    }*/
-
-    
-    //overlay div for open modal
-    
-
     //main content
     const content = document.createElement('div');
     content.classList.add('content');
@@ -175,9 +162,8 @@ const pageLoad = () => {
     addTaskButtonContainer.classList.add('add-task-container');
     const addTaskModalButton = document.createElement('button');
     addTaskModalButton.id = 'addTaskModalOpen';
-    //addTaskButton.classList.add('add-task');
     addTaskModalButton.textContent = '+ Add Task';
-    
+
 
     addTaskButtonContainer.appendChild(addTaskModalButton);
     content.appendChild(addTaskButtonContainer);
@@ -256,7 +242,6 @@ const pageLoad = () => {
     priorityContainer.appendChild(mediumPrioInput);
     priorityContainer.appendChild(mediumPrioLabel);
     taskForm.appendChild(priorityContainer);
-    //addProjectModalBody.textContent = 'asdasd'
     addTaskModalBody.appendChild(taskForm);
     addTaskModal.appendChild(addTaskModalBody);
     document.body.appendChild(addTaskModal);
@@ -272,7 +257,6 @@ const pageLoad = () => {
     priorityContainer.appendChild(highPrioInput);
     priorityContainer.appendChild(highPrioLabel);
     taskForm.appendChild(priorityContainer);
-    //addProjectModalBody.textContent = 'asdasd'
     addTaskModalBody.appendChild(taskForm);
     addTaskModal.appendChild(addTaskModalBody);
     document.body.appendChild(addTaskModal);
@@ -280,12 +264,12 @@ const pageLoad = () => {
     const dueDateContainer = document.createElement('div');
     dueDateContainer.id = 'due-date-container';
     taskForm.appendChild(dueDateContainer);
-    
+
     const dueDateLabel = document.createElement('label');
     dueDateLabel.id = 'due-date-label'
     dueDateLabel.textContent = 'Due Date';
     dueDateContainer.appendChild(dueDateLabel);
-    
+
     const dueDate = document.createElement('input');
     dueDate.id = 'due-date';
     dueDate.type = 'date';
@@ -313,31 +297,22 @@ const pageLoad = () => {
     addTaskButton.textContent = 'Add Task';
     taskForm.appendChild(addTaskButton);
 
-    addTaskButton.addEventListener('click', addTask/*(taskTittle.textContent, taskDescription, document.querySelector('input[name="priority"]:checked').value,
-    dueDate.value, projectSelectContainer.value)*/);
-    
+    addTaskButton.addEventListener('click', addTask);
+
 
 
     //make button for opening/closing the modal for adding tasks
     const openTaskModalButton = document.getElementById('addTaskModalOpen');
     const closeTaskModalButton = document.getElementById('task-modal-close');
-    
+
 
     openTaskModalButton.addEventListener('click', () => {
         const modal = document.getElementById('modal-task');
         openModal(modal);
-        //currentDate = getDate();
         currentDate = format(new Date(), 'yyyy-MM-dd');
         dueDate.min = currentDate;
         dueDate.value = currentDate;
         checkPastDueDate();
-        //dueDate.valueAsDate = new Date(currentDate);
-
-        //let dataNormal = format(new Date(), 'yyy-MM-dd');
-        //console.log(dataNormal, currentDate);
-        //updateProjectList();
-        // dueDate.valueAsDate = new Date(currentDate.getFullYear(), currentDate.getMonth(),
-        // currentDate.getDay());
     })
 
 
@@ -348,7 +323,7 @@ const pageLoad = () => {
 
     const errorModal = document.createElement('div');
     errorModal.id = 'task-name-error-modal';
-    errorModal.classList.add('modal');
+    errorModal.classList.add('modal', 'error');
     document.body.appendChild(errorModal);
     const errorMsg = document.createElement('div');
     errorMsg.textContent = 'A task with the same tittle already exists. Please, pick another tittle.';
@@ -368,20 +343,41 @@ const pageLoad = () => {
     content.appendChild(tasksContainer);
 
     const errorProjectModal = document.createElement('div');
-    errorProjectModal .id = 'project-name-error-modal';
-    errorProjectModal .classList.add('modal');
-    document.body.appendChild(errorProjectModal );
+    errorProjectModal.id = 'project-name-error-modal';
+    errorProjectModal.classList.add('modal', 'error');
+    document.body.appendChild(errorProjectModal);
     const errorProjectMsg = document.createElement('div');
     errorProjectMsg.textContent = 'A project with the same tittle already exists. Please, pick another tittle.';
     errorProjectMsg.id = 'project-tittle-error-message';
-    errorProjectModal .appendChild(errorProjectMsg);
+    errorProjectModal.appendChild(errorProjectMsg);
     const errorProjectModalClose = document.createElement('button');
     errorProjectModalClose.id = 'project-name-error-close';
     errorProjectModalClose.textContent = 'OK';
-    errorProjectModal .appendChild(errorProjectModalClose);
+    errorProjectModal.appendChild(errorProjectModalClose);
 
     errorProjectModalClose.addEventListener('click', () => {
+        //modal = e.parentTarget.parentTarget;
+        //e.classList.remove('active');
         errorProjectModal.classList.remove('active');
+    })
+
+    const errorShortProjectModal = document.createElement('div');
+    errorShortProjectModal.id = 'project-name-short-modal';
+    errorShortProjectModal.classList.add('modal', 'error');
+    document.body.appendChild(errorShortProjectModal);
+    const errorShortProjectMsg = document.createElement('div');
+    errorShortProjectMsg.textContent = 'Project tittle too short. Please, pick another tittle.';
+    errorShortProjectMsg.id = 'project-short-error-message';
+    errorShortProjectModal.appendChild(errorShortProjectMsg);
+    const errorShortProjectModalClose = document.createElement('button');
+    errorShortProjectModalClose.id = 'project-name-short-close';
+    errorShortProjectModalClose.textContent = 'OK';
+    errorShortProjectModal.appendChild(errorShortProjectModalClose);
+
+    errorShortProjectModalClose.addEventListener('click', () => {
+        //const modal = document.getElementById('project-name-short-modal');
+        //modal.classList.remove('active');
+        errorShortProjectModal.classList.remove('active');
     })
 
     //footer
@@ -390,7 +386,7 @@ const pageLoad = () => {
     footerAuthor.textContent = 'Placeholder footer';
     footer.appendChild(footerAuthor);
     document.body.appendChild(footer);
-    
+
     // retrieve and add tasks to page
     addTasksToPage('Inbox');
     checkPastDueDate();

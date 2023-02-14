@@ -2,43 +2,14 @@ import { closeModal } from "./pageload";
 import { addTasksToPage, checkPastDueDate, cleanTasksContainer } from "./taskManagement";
 
 const addProject = () => {
-   // const openModalButton = document.getElementById('addProject');
-   // const closeModalButton = document.getElementById('modal-close');
-   // const overlay = document.getElementById('overlay');
-
-   // openModalButton.addEventListener('click', () => {
-   //       const modal = document.getElementById('modal-project');
-   //       openModal(modal);
-   // })
-   
-   // overlay.addEventListener('click', () => {
-   //    const openModals = document.querySelectorAll('.modal.active');
-   //    openModals.forEach(modal => {
-   //       closeModal(modal);
-   //    })
-   // })
-
-   // closeModalButton.addEventListener('click', () => {
-   //       const modal = document.getElementById('modal-project');
-   //       closeModal(modal);
-   // })
-
-   // function openModal(modal){
-   //    if (modal == null) return;
-   //    modal.classList.add('active')
-   //    overlay.classList.add('active')
-   // }
-
-   // function closeModal(modal){
-   //    if (modal == null) return;
-   //    modal.classList.remove('active')
-   //    overlay.classList.remove('active')
-   // }
-
    const projectTittle = document.getElementById('add-project-tittle');
+   if (projectTittle.value.length < 3){
+      shortTittleError();
+      return;
+   }
    const projects = JSON.parse(localStorage.getItem('projects'));
-   for (let i = 0; i < projects.length; i++){
-      if (projects[i] == projectTittle.value){
+   for (let i = 0; i < projects.length; i++) {
+      if (projects[i] == projectTittle.value) {
          const errorModal = document.getElementById('project-name-error-modal');
          errorModal.classList.add('active');
          return;
@@ -54,50 +25,35 @@ const addProject = () => {
    closeModal(modal);
    addProjectsToSidebar();
 
-} 
-
-// const checkInboxProject = () => {
-//    if (!(localStorage.getItem('projects'))) {
-//       const projects = ['Inbox'];
-//       localStorage.setItem('projects', JSON.stringify(projects));
-//    }
-// }
+}
 
 const updateProjectSelector = () => {
-   
-   
-   
    const projectSelector = document.getElementById('project-select');
    const projects = JSON.parse(localStorage.getItem('projects'));
    let projectCheck = false;
 
-   for (let i = 0; i < projects.length; i++){
+   for (let i = 0; i < projects.length; i++) {
       for (let y = 0; y < projectSelector.children.length; y++) {
-         if (projectSelector.children.item(y).value == projects[i]){
+         if (projectSelector.children.item(y).value == projects[i]) {
             projectCheck = true;
          }
       }
-      if (projectCheck == false){
+      if (projectCheck == false) {
          const newProject = document.createElement('option');
-         newProject.value = 
-         newProject.text = `${projects[i]}`;
+         newProject.value =
+            newProject.text = `${projects[i]}`;
          projectSelector.appendChild(newProject);
       }
       projectCheck = false;
    }
-
-   
-
-   
-
 }
 
 const addProjectsToSidebar = () => {
    const sidebar = document.getElementById('sidebar');
    const projects = JSON.parse(localStorage.getItem('projects'));
    let findButton = false;
-   for (let i = 1; i < projects.length; i++){
-      for (let y = 5; y < sidebar.childNodes.length; y++){
+   for (let i = 1; i < projects.length; i++) {
+      for (let y = 5; y < sidebar.childNodes.length; y++) {
          if (sidebar.childNodes.item(y).textContent == projects[i]) {
             findButton = true;
             break;
@@ -115,6 +71,12 @@ const addProjectsToSidebar = () => {
       }
       findButton = false;
    }
+}
+
+const shortTittleError = () => {
+   const errorModal = document.getElementById('project-name-short-modal');
+   errorModal.classList.add('active');
+
 }
 
 export { addProject, updateProjectSelector, addProjectsToSidebar }
