@@ -356,8 +356,6 @@ const pageLoad = () => {
     errorProjectModal.appendChild(errorProjectModalClose);
 
     errorProjectModalClose.addEventListener('click', () => {
-        //modal = e.parentTarget.parentTarget;
-        //e.classList.remove('active');
         errorProjectModal.classList.remove('active');
     })
 
@@ -375,17 +373,30 @@ const pageLoad = () => {
     errorShortProjectModal.appendChild(errorShortProjectModalClose);
 
     errorShortProjectModalClose.addEventListener('click', () => {
-        //const modal = document.getElementById('project-name-short-modal');
-        //modal.classList.remove('active');
         errorShortProjectModal.classList.remove('active');
     })
 
     //footer
     const footer = document.createElement('footer');
     const footerAuthor = document.createElement('div');
-    footerAuthor.textContent = 'Placeholder footer';
+    footerAuthor.textContent = 'Bruno Costa @\xa0';
     footer.appendChild(footerAuthor);
+    const github = document.createElement('a');
+    github.textContent = 'GitHub';
+    github.href = 'https://github.com/BrunoGCosta90';
+    footer.appendChild(github);
+    const iconsSourceContainer = document.createElement('div');
+    iconsSourceContainer.classList.add('icons-source');
+    const iconsSource = document.createElement('div');
+    iconsSource.textContent = 'Icons from\xa0';
+    iconsSourceContainer.appendChild(iconsSource);
+    const iconsLink = document.createElement('a');
+    iconsLink.textContent = 'Material Design Icons';
+    iconsLink.href = 'https://materialdesignicons.com/';
+    iconsSourceContainer.appendChild(iconsLink);
+    footer.appendChild(iconsSourceContainer);
     document.body.appendChild(footer);
+   
 
     // retrieve and add tasks to page
     addTasksToPage('Inbox');
